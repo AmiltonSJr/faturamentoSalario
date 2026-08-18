@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<link rel="stylesheet" href="/css/pagePrincipal.css">
+	<title>Meu Salário</title>
+</head>
+
+<body>
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" style="padding-top:42px">
+   
+
+        <h2 ><i class="fa-solid fa-user-tie"></i> MeuSalário</h2>
+
+        <nav>
+            <ul>
+                <li><a th:href="@{/administration}"><i class="fa-solid fa-house"></i> Início</a></li>
+                <li><a th:href="@{/salario}"><i class="fa-solid fa-sack-dollar"></i> Meu salário</a></li>
+                <li><a href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
+                <li><a href="#"><i class="fa-solid fa-chart-line"></i> Relatórios</a></li>
+                <li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
+            </ul>
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main">
+
+        <!-- CABEÇALHO -->
+        <header class="header">
+
+            <div>
+                <h1>Olá, Seja bem vindo! </h1>
+                <p>Mantenha o seu salário em dia.</p>
+            </div>
+
+            <button class="btn-sair">Sair</button>
+
+        </header>
+
+
+        <!-- CARDS FINANCEIROS -->
+        <section class="cards">
+
+            <div class="card salario">
+                <span>Salário</span>
+                <h2>R$ 3.500,00</h2>
+                <p>Recebido este mês</p>
+            </div>
+
+            <div class="card despesas">
+                <span>Despesas</span>
+                <h2>R$ 1.850,00</h2>
+                <p>Gastos registrados</p>
+            </div>
+
+            <div class="card restante">
+                <span>Disponível</span>
+                <h2>R$ 1.650,00</h2>
+                <p>Você ainda pode gastar</p>
+            </div>
+
+        </section>
+
+
+        <!-- ÁREA INFERIOR -->
+        <section class="dashboard">
+
+            <!-- DESPESAS -->
+            <div class="box">
+
+                <div class="box-header">
+
+                    <div>
+                        <h2>Despesas recentes</h2>
+                        <p>Seus últimos gastos</p>
+                    </div>
+
+                    <button class="btn-adicionar">
+                        + Adicionar
+                    </button>
+
+                </div>
+
+
+                <ul class="despesas-lista">
+
+                    <li>
+                        <div>
+                            <strong>Mercado</strong>
+                            <small>Alimentação</small>
+                        </div>
+
+                        <span>- R$ 350,00</span>
+                    </li>
+
+                    <li>
+                        <div>
+                            <strong>Aluguel</strong>
+                            <small>Moradia</small>
+                        </div>
+
+                        <span>- R$ 900,00</span>
+                    </li>
+
+                    <li>
+                        <div>
+                            <strong>Internet</strong>
+                            <small>Contas</small>
+                        </div>
+
+                        <span>- R$ 100,00</span>
+                    </li>
+
+                    <li>
+                        <div>
+                            <strong>Academia</strong>
+                            <small>Saúde</small>
+                        </div>
+
+                        <span>- R$ 120,00</span>
+                    </li>
+
+                    <li>
+                        <div>
+                            <strong>Netflix</strong>
+                            <small>Entretenimento</small>
+                        </div>
+
+                        <span>- R$ 50,00</span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- RESUMO -->
+            <div class="box resumo">
+
+                <h2>Resumo do mês</h2>
+
+                <p>Você já utilizou:</p>
+
+                <div class="porcentagem">
+                    52%
+                </div>
+
+                <div class="barra">
+                    <div class="progresso"></div>
+                </div>
+
+                <div class="resumo-info">
+                    <span>Salário</span>
+                    <strong>R$ 3.500,00</strong>
+                </div>
+
+                <div class="resumo-info">
+                    <span>Gastos</span>
+                    <strong>R$ 1.850,00</strong>
+                </div>
+
+                <div class="resumo-info">
+                    <span>Disponível</span>
+                    <strong>R$ 1.650,00</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    <!-- JS -->   
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script> 
+</body>
+
+</html>
