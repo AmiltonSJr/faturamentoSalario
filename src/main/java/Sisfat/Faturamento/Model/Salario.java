@@ -18,7 +18,7 @@ public class Salario {
 	
 	private BigDecimal valor;
 	
-	private LocalDate dataRecebimento;
+	private LocalDate dataInicioVigencia;
 
 	public long getId() {
 		return id;
@@ -36,12 +36,12 @@ public class Salario {
 		this.valor = valor;
 	}
 
-	public LocalDate getDataRecebimento() {
-		return dataRecebimento;
+	public LocalDate getDataInicioVigencia() {
+	    return dataInicioVigencia;
 	}
 
-	public void setDataRecebimento(LocalDate dataRecebimento) {
-		this.dataRecebimento = dataRecebimento;
+	public void setDataInicioVigencia(LocalDate dataInicioVigencia) {
+		this.dataInicioVigencia = dataInicioVigencia;
 	}
 }
 

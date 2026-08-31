@@ -14,14 +14,11 @@
 
     <!-- MENU LATERAL -->
     <aside class="sidebar" style="padding-top:42px">
-   
-
-        <h2 ><i class="fa-solid fa-user-tie"></i> MeuSalário</h2>
-
         <nav>
             <ul>
                 <li><a th:href="@{/administration}"><i class="fa-solid fa-house"></i> Início</a></li>
                 <li><a th:href="@{/salario}"><i class="fa-solid fa-sack-dollar"></i> Meu salário</a></li>
+                <li><a href="#"><i class="fa-solid fa-sack-dollar"></i> Renda Extra</a></li>
                 <li><a href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
                 <li><a href="#"><i class="fa-solid fa-chart-line"></i> Relatórios</a></li>
                 <li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
@@ -33,6 +30,20 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main">
+     
+    <!-- BARRA SUPERIOR -->
+	<header class="topbar">
+
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input 
+            type="text"
+            placeholder="Pesquisar..."
+        >
+    </div>
+
+</header>
 
         <!-- CABEÇALHO -->
         <header class="header">
