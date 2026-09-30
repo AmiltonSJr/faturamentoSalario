@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despesas - Meu Salário</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/pagePrincipal.css}">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Meu Salário</span>
+        </div>
+
+        <nav>
+            <a th:href="@{/administration}">
+                <i class="fa-solid fa-house"></i>
+                Início
+            </a>
+
+            <a th:href="@{/salario}">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Salário
+            </a>
+
+            <a th:href="@{/renda-extra}">
+                <i class="fa-solid fa-plus"></i>
+                Renda Extra
+            </a>
+
+
+            <a href="#">
+                <i class="fa-solid fa-chart-column"></i>
+                Relatórios
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-bullseye"></i>
+                Metas
+            </a>
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h4>Despesas</h4>
+                <span>Cadastre e acompanhe seus gastos</span>
+            </div>
+
+            <div class="search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Pesquisar...">
+            </div>
+        </header>
+
+        <div class="container mt-4">
+
+            <!-- Cadastro -->
+            <div class="card shadow-sm">
+
+                <div class="card-header" style="background-color: #2bbb50">
+                    <h5 class="mb-0" style="color: black">
+                        <i class="fa-solid fa-receipt" style="color: #112b1e"></i>
+                        Cadastrar Despesa
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form th:object="${despesa}" th:action="@{/despesa}" method="POST">
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <input type="text" class="form-control" id="descricao" th:field="*{descricao}" placeholder="Ex: Conta de luz" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="categoria" class="form-label">Categoria</label>
+                                <input type="text" class="form-control" id="categoria" th:field="*{categoria}" placeholder="Ex: Moradia" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="valor" class="form-label">Valor</label>
+                                <input type="number" class="form-control" id="valor" th:field="*{valor}" step="0.01" min="0.01" placeholder="0,00" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="data" class="form-label">Data</label>
+                                <input type="date" class="form-control" id="data" th:field="*{data}" required>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Salvar Despesa
+                        </button>
+
+                        <a th:href="@{/administration}" class="btn btn-secondary">
+                            <i class="fa-solid fa-rotate-left"></i>
+                            Voltar
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- Despesas cadastradas -->
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-header" style="background-color: #2bbb50">
+                    <h5 class="mb-0" style="color: black">
+                        <i class="fa-solid fa-clock-rotate-left" style="color: #112b1e"></i>
+                        Despesas cadastradas
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Valor</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr th:each="despesas : ${despesass}">
+
+                                    <td th:text="${despesas.descricao}"></td>
+
+                                    <td th:text="${despesas.categoria}"></td>
+
+                                    <td th:text="${despesas.valor}"></td>
+
+                                    <td th:text="${despesas.data}"></td>
+
+                                    <td>
+
+                                        <a th:href="@{/despesass/editar/{id}(id=${despesas.id})}" class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Editar
+                                        </a>
+
+                                        <a th:href="@{/despesas/excluir/{id}(id=${despesas.id})}" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i>
+                                            Excluir
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

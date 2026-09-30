@@ -24,7 +24,7 @@
             <ul>
                 <li><a th:href="@{/administration}"><i class="fa-solid fa-house"></i> Início</a></li>
                 <li><a th:href="@{/renda-extra}"><i class="fa-solid fa-sack-dollar"></i> Renda Extra</a></li>
-                <li><a href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
+                 <li><a th:href="@{/despesas}"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
                 <li><a href="#"><i class="fa-solid fa-chart-line"></i> Relatórios</a></li>
                 <li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
             </ul>
@@ -105,16 +105,16 @@
 
                         <!-- BOTÕES -->
                         <div class="d-flex justify-content-end gap-2">
-
-                            <!-- CANCELAR -->
+							 <!-- SALVAR -->
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-floppy-disk"></i> Salvar salário
+                            </button>
+							
+                            <!-- Voltar -->
                             <a th:href="@{/administration}" class="btn btn-secondary">
                                 <i class="fa-solid fa-rotate-left"></i> Voltar
                             </a>
 
-                            <!-- SALVAR -->
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa-solid fa-floppy-disk"></i> Salvar salário
-                            </button>
 
                         </div>
 

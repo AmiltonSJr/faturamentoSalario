@@ -23,7 +23,7 @@
             <ul>
                 <li><a th:href="@{/administration}"><i class="fa-solid fa-house"></i> Início</a></li>
                 <li><a th:href="@{/salario}"><i class="fa-solid fa-wallet"></i> Salário</a></li>
-                <li><a href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
+                <li><a th:href="@{/despesas}"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
                 <li><a href="#"><i class="fa-solid fa-chart-line"></i> Relatórios</a></li>
                 <li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
             </ul>
@@ -42,90 +42,137 @@
         </header>
 
         <!-- CONTEÚDO DA PÁGINA -->
-        <div class="container mt-4">
+<div class="container mt-4">
 
-            <!-- CABEÇALHO -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1>
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        Renda Extra Fixa
-                    </h1>
-
-                    <p class="text-muted">
-                        Cadastre e acompanhe suas rendas extras fixas.
-                    </p>
-                </div>
-            </div>
-
-            <!-- CARD -->
-            <div class="card shadow-sm">
-
-                <!-- CABEÇALHO DO CARD -->
-                <div class="card-header" style="background-color: #2bbb50">
-                    <h5 class="mb-0" style="color: black">
-                        <i class="fa-solid fa-money-bill-trend-up" style="color: #112b1e"></i>
-                        Cadastrar renda extra fixa
-                    </h5>
-                </div>
-
-                <!-- CORPO DO CARD -->
-                <div class="card-body">
-
-                    <!-- FORMULÁRIO -->
-                    <form th:object="${rendaExtra}" method="POST">
-
-                        <!-- DESCRIÇÃO -->
-                        <div class="mb-3">
-                            <label for="descricao" class="form-label">
-                                Descrição:
-                            </label>
-
-                            <input type="text" class="form-control" id="descricao" th:field="*{descricao}" placeholder="Ex: Aluguel de imóvel" required>
-                        </div>
-
-                        <!-- VALOR -->
-                        <div class="mb-3">
-                            <label for="valor" class="form-label">
-                                Valor:
-                            </label>
-
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    R$
-                                </span>
-
-                                <input type="number" class="form-control" id="valor" th:field="*{valor}" step="0.01" min="0.01" placeholder="0,00" required>
-                            </div>
-                        </div>
-
-                        <!-- BOTÕES -->
-                        <div class="d-flex justify-content-end gap-2">
-
-                            <!-- EXCLUIR -->
-                            <button type="button" class="btn btn-danger">
-                                <i class="fa-solid fa-trash"></i> Excluir
-                            </button>
-
-                            <!-- VOLTAR -->
-                            <a th:href="@{/administration}" class="btn btn-secondary">
-                                <i class="fa-solid fa-xmark"></i> Voltar
-                            </a>
-
-                            <!-- SALVAR -->
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa-solid fa-floppy-disk"></i> Salvar
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div>
-
+    <!-- CABEÇALHO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>
+                <i class="fa-solid fa-sack-dollar"></i>
+                Renda Extra Fixa
+            </h1>
+            <p class="text-muted">
+                Cadastre e acompanhe suas rendas extras fixas.
+            </p>
         </div>
+    </div>
+
+    <!-- CARD DE CADASTRO -->
+    <div class="card shadow-sm">
+
+        <!-- CABEÇALHO DO CARD -->
+        <div class="card-header" style="background-color: #2bbb50">
+            <h5 class="mb-0" style="color: black">
+                <i class="fa-solid fa-money-bill-trend-up" style="color: #112b1e"></i>
+                Cadastrar renda extra fixa
+            </h5>
+        </div>
+
+        <!-- CORPO DO CARD -->
+        <div class="card-body">
+
+            <!-- FORMULÁRIO -->
+            <form th:object="${rendaExtra}" th:action="@{/renda-extra}" method="POST">
+
+                <input type="hidden" th:field="*{id}">
+
+                <!-- DESCRIÇÃO -->
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">
+                        Descrição:
+                    </label>
+                    <input type="text" class="form-control" id="descricao" th:field="*{descricao}" placeholder="Ex: Aluguel de imóvel" required>
+                </div>
+
+                <!-- VALOR -->
+                <div class="mb-3">
+                    <label for="valor" class="form-label">
+                        Valor:
+                    </label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            R$
+                        </span>
+
+                        <input type="number" class="form-control" id="valor" th:field="*{valor}" step="0.01" min="0.01" placeholder="0,00" required>
+                    </div>
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex justify-content-end gap-2">
+
+                    <!-- SALVAR -->
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Salvar Renda
+                    </button>
+
+                    <!-- VOLTAR -->
+                    <a th:href="@{/administration}" class="btn btn-secondary">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        Voltar
+                    </a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- CARD DE EXIBIÇÃO -->
+    <div class="card shadow-sm mt-4">
+
+        <!-- CABEÇALHO -->
+        <div class="card-header" style="background-color: #2bbb50">
+            <h5 class="mb-0" style="color: black">
+                <i class="fa-solid fa-clock-rotate-left" style="color: #112b1e"></i>
+                Rendas extras cadastradas
+            </h5>
+        </div>
+
+        <!-- CORPO -->
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="renda : ${rendasExtras}">
+                            <td th:text="${renda.descricao}"></td>
+                            <td th:text="${renda.valor}"></td>
+                            <td>
+                                <a th:href="@{/renda-extra/editar/{id}(id=${renda.id})}" class="btn btn-warning btn-sm">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Editar
+                                </a>
+
+                                <a th:href="@{/renda-extra/excluir/{id}(id=${renda.id})}" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+       
+        
 
     </main>
 
