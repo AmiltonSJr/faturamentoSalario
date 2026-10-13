@@ -3,6 +3,7 @@ package Sisfat.Faturamento.Model;
 import java.time.LocalDate;
 
 public class DespesaExibicao {
+	private Long id;
 	private String descricao;
 	private String categoria;
 	private java.math.BigDecimal valor;
@@ -13,6 +14,15 @@ public class DespesaExibicao {
 	private String periodo;
 	
 	
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getPeriodo() {
 		return periodo;

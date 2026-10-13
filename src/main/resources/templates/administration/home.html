@@ -2,201 +2,194 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-	<link rel="stylesheet" href="/css/pagePrincipal.css">
-	<title>Meu Salário</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="/css/pagePrincipal.css">
+<title>Meu Salário</title>
 </head>
 
 <body>
 
-    <!-- MENU LATERAL -->
-    <aside class="sidebar" style="padding-top:42px">
-        <nav>
-            <ul>
-                <li><a th:href="@{/administration}"><i class="fa-solid fa-house"></i> Início</a></li>
-                <li><a th:href="@{/salario}"><i class="fa-solid fa-sack-dollar"></i> Meu salário</a></li>
-                <li><a th:href="@{/renda-extra}"><i class="fa-solid fa-sack-dollar"></i> Renda Extra</a></li>
-                <li><a th:href="@{/despesas}"><i class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
-                <li><a href="#"><i class="fa-solid fa-chart-line"></i> Relatórios</a></li>
-                <li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
-            </ul>
-        </nav>
+	<!-- MENU LATERAL -->
+	<aside class="sidebar" style="padding-top: 42px">
+		<nav>
+			<ul>
+				<li><a th:href="@{/administration}"><i
+						class="fa-solid fa-house"></i> Início</a></li>
+				<li><a th:href="@{/salario}"><i
+						class="fa-solid fa-sack-dollar"></i> Meu salário</a></li>
+				<li><a th:href="@{/renda-extra}"><i
+						class="fa-solid fa-sack-dollar"></i> Renda Extra</a></li>
+				<li><a th:href="@{/despesas}"><i
+						class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
+				<li><a href="#"><i class="fa-solid fa-chart-line"></i>
+						Relatórios</a></li>
+				<li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
+			</ul>
+		</nav>
 
-    </aside>
-
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main">
-     
-    <!-- BARRA SUPERIOR -->
-	<header class="topbar">
-
-    <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input 
-            type="text"
-            placeholder="Pesquisar..."
-        >
-    </div>
-
-</header>
-
-        <!-- CABEÇALHO -->
-        <header class="header">
-
-            <div>
-                <h1>Olá, Seja bem vindo! </h1>
-                <p>Mantenha a sua renda em dia.</p>
-            </div>
-
-            <button class="btn-sair">Sair</button>
-
-        </header>
+	</aside>
 
 
-        <!-- CARDS FINANCEIROS -->
-        <section class="cards">
+	<!-- CONTEÚDO PRINCIPAL -->
+	<main class="main">
 
-            <div class="card salario">
-                <span>Salário</span>
-                <h2><div class="valor" th:text="${salario != null ? 'R$ ' + salario.valor : 'R$ 0,00'}"></div></h2>
-                <p>Recebido este mês</p>
-            </div>
-            
-            <div class="card renda-extra">
-    		<span>Renda Extra</span>
-    		<h2><div class="valor" th:text="${'R$ ' + totalRendasExtras}"></div></h2>
-    		<p>Rendas extras fixas</p>
+		<!-- BARRA SUPERIOR -->
+		<header class="topbar">
+
+			<div class="search-box">
+				<i class="fa-solid fa-magnifying-glass"></i> <input type="text"
+					placeholder="Pesquisar...">
 			</div>
 
-            <div class="card despesas">
-                <span>Despesas</span>
-                <h2>R$ 1.850,00</h2>
-                <p>Gastos registrados</p>
-            </div>
+		</header>
 
-            <div class="card restante">
-                <span>Disponível</span>
-                <h2>R$ 1.650,00</h2>
-                <p>Você ainda pode gastar</p>
-            </div>
+		<!-- CABEÇALHO -->
+		<header class="header">
 
-        </section>
+			<div>
+				<h1>Olá, Seja bem vindo!</h1>
+				<p>Mantenha a sua renda em dia.</p>
+			</div>
 
+			<button class="btn-sair">Sair</button>
 
-        <!-- ÁREA INFERIOR -->
-        <section class="dashboard">
-
-            <!-- DESPESAS -->
-            <div class="box">
-
-                <div class="box-header">
-
-                    <div>
-                        <h2>Despesas recentes</h2>
-                        <p>Seus últimos gastos</p>
-                    </div>
-
-                    <button class="btn-adicionar">
-                        + Adicionar
-                    </button>
-
-                </div>
+		</header>
 
 
-                <ul class="despesas-lista">
+		<!-- CARDS FINANCEIROS -->
+		<section class="cards">
 
-                    <li>
-                        <div>
-                            <strong>Mercado</strong>
-                            <small>Alimentação</small>
-                        </div>
+			<div class="card salario">
+				<span>Salário</span>
+				<h2>
+					<div class="valor"
+						th:text="${salario != null ? 'R$ ' + salario.valor : 'R$ 0,00'}"></div>
+				</h2>
+				<p>Recebido este mês</p>
+			</div>
 
-                        <span>- R$ 350,00</span>
-                    </li>
-
-                    <li>
-                        <div>
-                            <strong>Aluguel</strong>
-                            <small>Moradia</small>
-                        </div>
-
-                        <span>- R$ 900,00</span>
-                    </li>
-
-                    <li>
-                        <div>
-                            <strong>Internet</strong>
-                            <small>Contas</small>
-                        </div>
-
-                        <span>- R$ 100,00</span>
-                    </li>
-
-                    <li>
-                        <div>
-                            <strong>Academia</strong>
-                            <small>Saúde</small>
-                        </div>
-
-                        <span>- R$ 120,00</span>
-                    </li>
-
-                    <li>
-                        <div>
-                            <strong>Netflix</strong>
-                            <small>Entretenimento</small>
-                        </div>
-
-                        <span>- R$ 50,00</span>
-                    </li>
-
-                </ul>
-
-            </div>
+			<div class="card renda-extra">
+				<span>Renda Extra</span>
+				<h2>
+					<div class="valor" th:text="${'R$ ' + totalRendasExtras}"></div>
+				</h2>
+				<p>Rendas extras fixas</p>
+			</div>
 
 
-            <!-- RESUMO -->
-            <div class="box resumo">
+			<div class="card despesas">
+				<h2>
+					<div class="valor"
+						th:text="${'R$ ' + #numbers.formatDecimal(totalDespesas, 1, 'POINT', 2, 'COMMA')}"></div>
+				</h2>
+				<p>Gastos registrados</p>
+			</div>
 
-                <h2>Resumo do mês</h2>
 
-                <p>Você já utilizou:</p>
+			<div class="card restante">
+				<span>Disponível</span>
+				<h2>R$ 1.650,00</h2>
+				<p>Você ainda pode gastar</p>
+			</div>
 
-                <div class="porcentagem">
-                    52%
-                </div>
+		</section>
 
-                <div class="barra">
-                    <div class="progresso"></div>
-                </div>
 
-                <div class="resumo-info">
-                    <span>Salário</span>
-                    <strong class="valor" th:text="${salario != null ? 'R$ ' + salario.valor : 'R$ 0,00'}"></strong>
-                </div>
+		<!-- ÁREA INFERIOR -->
+		<section class="dashboard">
 
-                <div class="resumo-info">
-                    <span>Gastos</span>
-                    <strong>R$ 1.850,00</strong>
-                </div>
+			<!-- DESPESAS -->
+			<div class="box">
 
-                <div class="resumo-info">
-                    <span>Disponível</span>
-                    <strong>R$ 1.650,00</strong>
-                </div>
+				<div class="box-header">
 
-            </div>
+					<div>
+						<h2>Despesas recentes</h2>
+						<p>Seus últimos gastos</p>
+					</div>
 
-        </section>
+					<button class="btn-adicionar">+ Adicionar</button>
 
-    </main>
-    <!-- JS -->   
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script> 
+				</div>
+
+
+				<ul class="despesas-lista">
+
+					<li>
+						<div>
+							<strong>Mercado</strong> <small>Alimentação</small>
+						</div> <span>- R$ 350,00</span>
+					</li>
+
+					<li>
+						<div>
+							<strong>Aluguel</strong> <small>Moradia</small>
+						</div> <span>- R$ 900,00</span>
+					</li>
+
+					<li>
+						<div>
+							<strong>Internet</strong> <small>Contas</small>
+						</div> <span>- R$ 100,00</span>
+					</li>
+
+					<li>
+						<div>
+							<strong>Academia</strong> <small>Saúde</small>
+						</div> <span>- R$ 120,00</span>
+					</li>
+
+					<li>
+						<div>
+							<strong>Netflix</strong> <small>Entretenimento</small>
+						</div> <span>- R$ 50,00</span>
+					</li>
+
+				</ul>
+
+			</div>
+
+
+			<!-- RESUMO -->
+			<div class="box resumo">
+
+				<h2>Resumo do mês</h2>
+
+				<p>Você já utilizou:</p>
+
+				<div class="porcentagem">52%</div>
+
+				<div class="barra">
+					<div class="progresso"></div>
+				</div>
+
+				<div class="resumo-info">
+					<span>Salário</span> <strong class="valor"
+						th:text="${salario != null ? 'R$ ' + salario.valor : 'R$ 0,00'}"></strong>
+				</div>
+
+				<div class="resumo-info">
+					<span>Gastos</span> <strong>R$ 1.850,00</strong>
+				</div>
+
+				<div class="resumo-info">
+					<span>Disponível</span> <strong>R$ 1.650,00</strong>
+				</div>
+
+			</div>
+
+		</section>
+
+	</main>
+	<!-- JS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

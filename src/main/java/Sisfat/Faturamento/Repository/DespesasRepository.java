@@ -1,9 +1,11 @@
 package Sisfat.Faturamento.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import Sisfat.Faturamento.Model.Despesas;
 
 public interface DespesasRepository extends JpaRepository<Despesas, Long> {
-
+	List<Despesas> findByGrupoParcelamento(String grupoParcelamento);
 }
