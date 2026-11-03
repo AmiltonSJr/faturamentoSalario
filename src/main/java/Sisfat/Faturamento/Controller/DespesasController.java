@@ -37,131 +37,144 @@ public class DespesasController {
 		return mv;
 	}
 
+	@PostMapping("/despesas")
+	public String salvar(Despesas despesas) {
 
-@PostMapping("/despesas")
-public String salvar(Despesas despesas) {
+		// Edição de uma despesa existente
+		if (despesas.getId() != 0) {
 
-    // Edição de uma despesa existente
-    if (despesas.getId() != 0) {
+			Despesas existente = despesasRepository.findById(despesas.getId()).orElseThrow();
 
-        Despesas existente = despesasRepository.findById(despesas.getId())
-                .orElseThrow();
+			// Edição de uma compra parcelada
+			if (existente.getGrupoParcelamento() != null) {
 
-        // Edição de uma compra parcelada
-        if (existente.getGrupoParcelamento() != null) {
+				var parcelas = despesasRepository.findByGrupoParcelamento(existente.getGrupoParcelamento());
 
-            var parcelas = despesasRepository.findByGrupoParcelamento(
-                    existente.getGrupoParcelamento());
+				int quantidadeAntiga = parcelas.size();
 
-            int quantidadeAntiga = parcelas.size();
-            int quantidadeNova = despesas.getQuantidadeParcelas();
+				Integer quantidadeInformada = despesas.getQuantidadeParcelas();
 
-            if (quantidadeNova < 1) {
-                return "redirect:/despesas";
-            }
+				if (quantidadeInformada == null || quantidadeInformada < 1) {
+					return "redirect:/despesas";
+				}
 
-            // Atualiza os dados de todas as parcelas existentes
-            for (Despesas parcela : parcelas) {
-                parcela.setDescricao(despesas.getDescricao());
-                parcela.setCategoria(despesas.getCategoria());
-                parcela.setValor(despesas.getValor());
-                parcela.setParcelada(true);
-                parcela.setQuantidadeParcelas(quantidadeNova);
-            }
+				int quantidadeNova = quantidadeInformada;
 
-            // Ajusta a quantidade de parcelas, se necessário
-            if (quantidadeNova < quantidadeAntiga) {
+				// Atualiza os dados de todas as parcelas existentes
+				for (Despesas parcela : parcelas) {
+					parcela.setDescricao(despesas.getDescricao());
+					parcela.setCategoria(despesas.getCategoria());
+					parcela.setValor(despesas.getValor());
+					parcela.setParcelada(true);
+					parcela.setQuantidadeParcelas(quantidadeNova);
+				}
 
-                parcelas.sort(java.util.Comparator.comparing(Despesas::getData));
+				// Ajusta a quantidade de parcelas, se necessário
+				if (quantidadeNova < quantidadeAntiga) {
 
-                for (int i = quantidadeNova; i < quantidadeAntiga; i++) {
-                    despesasRepository.delete(parcelas.get(i));
-                }
+					parcelas.sort(java.util.Comparator.comparing(Despesas::getData));
 
-            } else if (quantidadeNova > quantidadeAntiga) {
+					for (int i = quantidadeNova; i < quantidadeAntiga; i++) {
+						despesasRepository.delete(parcelas.get(i));
+					}
 
-                parcelas.sort(java.util.Comparator.comparing(Despesas::getData));
+				} else if (quantidadeNova > quantidadeAntiga) {
 
-                Despesas ultimaParcela = parcelas.get(parcelas.size() - 1);
+					parcelas.sort(java.util.Comparator.comparing(Despesas::getData));
 
-                for (int i = quantidadeAntiga; i < quantidadeNova; i++) {
-                    Despesas novaParcela = new Despesas();
+					Despesas ultimaParcela = parcelas.get(parcelas.size() - 1);
 
-                    novaParcela.setDescricao(despesas.getDescricao());
-                    novaParcela.setCategoria(despesas.getCategoria());
-                    novaParcela.setValor(despesas.getValor());
-                    novaParcela.setData(ultimaParcela.getData()
-                            .plusMonths(i - quantidadeAntiga + 1));
-                    novaParcela.setParcelada(true);
-                    novaParcela.setQuantidadeParcelas(quantidadeNova);
-                    novaParcela.setParcelaAtual(i + 1);
-                    novaParcela.setGrupoParcelamento(
-                            existente.getGrupoParcelamento());
+					for (int i = quantidadeAntiga; i < quantidadeNova; i++) {
 
-                    despesasRepository.save(novaParcela);
-                }
-            }
+						Despesas novaParcela = new Despesas();
 
-            // Corrige a numeração das parcelas restantes
-            var parcelasAtualizadas = despesasRepository.findByGrupoParcelamento(
-                    existente.getGrupoParcelamento());
+						novaParcela.setDescricao(despesas.getDescricao());
+						novaParcela.setCategoria(despesas.getCategoria());
+						novaParcela.setValor(despesas.getValor());
 
-            parcelasAtualizadas.sort(java.util.Comparator.comparing(Despesas::getData));
+						novaParcela.setData(ultimaParcela.getData().plusMonths(i - quantidadeAntiga + 1));
 
-            for (int i = 0; i < parcelasAtualizadas.size(); i++) {
-                parcelasAtualizadas.get(i).setParcelaAtual(i + 1);
-                parcelasAtualizadas.get(i).setQuantidadeParcelas(quantidadeNova);
-            }
+						novaParcela.setParcelada(true);
+						novaParcela.setQuantidadeParcelas(quantidadeNova);
+						novaParcela.setParcelaAtual(i + 1);
+						novaParcela.setGrupoParcelamento(existente.getGrupoParcelamento());
 
-            despesasRepository.saveAll(parcelasAtualizadas);
+						despesasRepository.save(novaParcela);
+					}
+				}
 
-            return "redirect:/despesas";
-        }
+				// Corrige a numeração das parcelas restantes
+				var parcelasAtualizadas = despesasRepository.findByGrupoParcelamento(existente.getGrupoParcelamento());
 
-        // Edição de uma despesa comum
-        existente.setDescricao(despesas.getDescricao());
-        existente.setCategoria(despesas.getCategoria());
-        existente.setValor(despesas.getValor());
-        existente.setData(despesas.getData());
+				parcelasAtualizadas.sort(java.util.Comparator.comparing(Despesas::getData));
 
-        despesasRepository.save(existente);
+				for (int i = 0; i < parcelasAtualizadas.size(); i++) {
+					parcelasAtualizadas.get(i).setParcelaAtual(i + 1);
+					parcelasAtualizadas.get(i).setQuantidadeParcelas(quantidadeNova);
+				}
 
-        return "redirect:/despesas";
-    }
+				despesasRepository.saveAll(parcelasAtualizadas);
 
-    // Cadastro de uma nova compra parcelada
-    if (despesas.isParcelada()) {
+				return "redirect:/despesas";
+			}
 
-        if (despesas.getQuantidadeParcelas() < 1) {
-            return "redirect:/despesas";
-        }
+			// Edição de uma despesa comum
+			existente.setDescricao(despesas.getDescricao());
+			existente.setCategoria(despesas.getCategoria());
+			existente.setValor(despesas.getValor());
+			existente.setData(despesas.getData());
+			existente.setParcelada(false);
+			existente.setGrupoParcelamento(null);
+			existente.setQuantidadeParcelas(0);
+			existente.setParcelaAtual(0);
 
-        String grupoParcelamento = UUID.randomUUID().toString();
+			despesasRepository.save(existente);
 
-        for (int i = 0; i < despesas.getQuantidadeParcelas(); i++) {
-            Despesas parcela = new Despesas();
+			return "redirect:/despesas";
+		}
 
-            parcela.setDescricao(despesas.getDescricao());
-            parcela.setCategoria(despesas.getCategoria());
-            parcela.setValor(despesas.getValor());
-            parcela.setData(despesas.getData().plusMonths(i));
-            parcela.setParcelada(true);
-            parcela.setQuantidadeParcelas(despesas.getQuantidadeParcelas());
-            parcela.setParcelaAtual(i + 1);
-            parcela.setGrupoParcelamento(grupoParcelamento);
+		// Cadastro de uma nova compra parcelada
+		if (despesas.isParcelada()) {
 
-            despesasRepository.save(parcela);
-        }
+			Integer quantidadeInformada = despesas.getQuantidadeParcelas();
 
-    } else {
-        // Cadastro de uma despesa comum
-        despesas.setGrupoParcelamento(null);
-        despesas.setParcelada(false);
-        despesasRepository.save(despesas);
-    }
+			if (quantidadeInformada == null || quantidadeInformada < 1) {
+				return "redirect:/despesas";
+			}
 
-    return "redirect:/despesas";
-}
+			int quantidadeNova = quantidadeInformada;
+
+			String grupoParcelamento = UUID.randomUUID().toString();
+
+			for (int i = 0; i < quantidadeNova; i++) {
+
+				Despesas parcela = new Despesas();
+
+				parcela.setDescricao(despesas.getDescricao());
+				parcela.setCategoria(despesas.getCategoria());
+				parcela.setValor(despesas.getValor());
+				parcela.setData(despesas.getData().plusMonths(i));
+				parcela.setParcelada(true);
+				parcela.setQuantidadeParcelas(quantidadeNova);
+				parcela.setParcelaAtual(i + 1);
+				parcela.setGrupoParcelamento(grupoParcelamento);
+
+				despesasRepository.save(parcela);
+			}
+
+		} else {
+
+			// Cadastro de uma despesa comum
+			despesas.setGrupoParcelamento(null);
+			despesas.setParcelada(false);
+			despesas.setQuantidadeParcelas(0);
+			despesas.setParcelaAtual(0);
+
+			despesasRepository.save(despesas);
+		}
+
+		return "redirect:/despesas";
+	}
 
 	@GetMapping("/despesas/editar/{id}")
 	public ModelAndView editar(@PathVariable Long id) {

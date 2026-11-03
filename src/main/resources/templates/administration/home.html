@@ -20,16 +20,15 @@
 		<nav>
 			<ul>
 				<li><a th:href="@{/administration}"><i
-						class="fa-solid fa-house"></i> Início</a></li>
+						class="fa-solid fa-house"></i> Relatório</a></li>
 				<li><a th:href="@{/salario}"><i
 						class="fa-solid fa-sack-dollar"></i> Meu salário</a></li>
 				<li><a th:href="@{/renda-extra}"><i
 						class="fa-solid fa-sack-dollar"></i> Renda Extra</a></li>
 				<li><a th:href="@{/despesas}"><i
 						class="fa-solid fa-hand-holding-dollar"></i> Despesas</a></li>
-				<li><a href="#"><i class="fa-solid fa-chart-line"></i>
-						Relatórios</a></li>
-				<li><a href="#"><i class="fa-solid fa-bullseye"></i> Metas</a></li>
+				<li><a href="#"><i class="fa-solid fa-bullseye"></i>
+						Gráficos</a></li>
 			</ul>
 		</nav>
 
@@ -84,19 +83,31 @@
 
 
 			<div class="card despesas">
+				<span>Despesas Futuras</span>
+				<h2>
+					<div class="valor"
+						th:text="${'R$ ' + #numbers.formatDecimal(totalGeralDespesas, 1, 'POINT', 2, 'COMMA')}"></div>
+				</h2>
+				<p>Valores futuros</p>
+			</div>
+
+			<div class="card despesas">
+				<span>Despesa Atual</span>
 				<h2>
 					<div class="valor"
 						th:text="${'R$ ' + #numbers.formatDecimal(totalDespesas, 1, 'POINT', 2, 'COMMA')}"></div>
 				</h2>
-				<p>Gastos registrados</p>
+				<p>Valor atual</p>
 			</div>
-
-
 			<div class="card restante">
-				<span>Disponível</span>
-				<h2>R$ 1.650,00</h2>
-				<p>Você ainda pode gastar</p>
+				<span>Valor Disponível</span>
+				<h2>
+					<div class="valor"
+						th:text="${'R$ ' + #numbers.formatDecimal(saldoDisponivel, 1, 'POINT', 2, 'COMMA')}"></div>
+				</h2>
+				<p>Dinheiro restante</p>
 			</div>
+
 
 		</section>
 
@@ -175,11 +186,16 @@
 				</div>
 
 				<div class="resumo-info">
-					<span>Gastos</span> <strong>R$ 1.850,00</strong>
+					<span>Gastos</span> <strong class="valor"
+						th:text="${totalDespesas != null ? 'R$ ' + #numbers.formatDecimal(totalDespesas, 1, 'POINT', 2, 'COMMA') : 'R$ 0,00'}">
+					</strong>
 				</div>
 
 				<div class="resumo-info">
-					<span>Disponível</span> <strong>R$ 1.650,00</strong>
+					<span>Disponível</span> <strong class="valor"
+							th:text="${saldoDisponivel != null ? 'R$ ' + #numbers.formatDecimal(saldoDisponivel, 1, 'POINT', 2, 'COMMA') : 'R$ 0,00'}">
+						</strong>
+					</strong>
 				</div>
 
 			</div>

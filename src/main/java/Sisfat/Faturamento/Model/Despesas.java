@@ -26,6 +26,20 @@ public class Despesas {
 	private LocalDate data;
 
 	private boolean parcelada;
+	
+	private Integer quantidadeParcelas;
+
+	private int parcelaAtual;
+	
+	
+
+	public Integer getQuantidadeParcelas() {
+		return quantidadeParcelas;
+	}
+
+	public void setQuantidadeParcelas(Integer quantidadeParcelas) {
+		this.quantidadeParcelas = quantidadeParcelas;
+	}
 
 	private String grupoParcelamento;
 
@@ -45,14 +59,6 @@ public class Despesas {
 		this.parcelada = parcelada;
 	}
 
-	public int getQuantidadeParcelas() {
-		return quantidadeParcelas;
-	}
-
-	public void setQuantidadeParcelas(int quantidadeParcelas) {
-		this.quantidadeParcelas = quantidadeParcelas;
-	}
-
 	public int getParcelaAtual() {
 		return parcelaAtual;
 	}
@@ -61,9 +67,6 @@ public class Despesas {
 		this.parcelaAtual = parcelaAtual;
 	}
 
-	private int quantidadeParcelas;
-
-	private int parcelaAtual;
 
 	public long getId() {
 		return id;

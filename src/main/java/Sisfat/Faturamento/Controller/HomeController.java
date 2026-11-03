@@ -1,6 +1,7 @@
 package Sisfat.Faturamento.Controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,14 +40,37 @@ public class HomeController {
                 .map(RendaExtraFixa::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         
-        BigDecimal totalDespesas = despesasRepository.findAll().stream()
+     // Soma de todas as despesas cadastradas
+        BigDecimal totalGeralDespesas = despesasRepository.findAll().stream()
                 .map(Despesas::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        // Soma somente das despesas do mês atual
+        LocalDate hoje = LocalDate.now();
+
+        BigDecimal totalDespesas = despesasRepository.findAll().stream()
+                .filter(despesa -> despesa.getData() != null
+                        && despesa.getData().getMonth() == hoje.getMonth()
+                        && despesa.getData().getYear() == hoje.getYear())
+                .map(Despesas::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        mv.addObject("totalGeralDespesas", totalGeralDespesas);
         mv.addObject("totalDespesas", totalDespesas);
         mv.addObject("salario", salario);
         mv.addObject("totalRendasExtras", totalRendasExtras);
 
+        // Valor total restante.
+        BigDecimal valorSalario = salario != null
+                ? salario.getValor()
+                : BigDecimal.ZERO;
+
+        BigDecimal saldoDisponivel = valorSalario
+                .add(totalRendasExtras)
+                .subtract(totalDespesas);
+
+        mv.addObject("saldoDisponivel", saldoDisponivel);
+        
         return mv;
     }
 }
